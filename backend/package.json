@@ -29,7 +29,7 @@
   },
   "scripts": {
     "dev": "NODE_ENV='development' tsx --watch ./src/index.ts",
-    "seed": "tsx --watch ./src/torrent/seeder.ts",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src",
+    "prod": "rm -rf static && cd ../frontend && rm -rf dist && bun run build && cp -r ./dist ../backend/static && cd ../backend && NODE_ENV=production tsx ./src/index.ts"
   }
 }

@@ -1,20 +1,31 @@
 import express from 'express';
 import RSS from 'rss';
 import {db, type TorrentRecord} from './db/db'
-
+import path from 'path'
 
 import { Feed } from 'feed';
 import {client, startSeeding} from './torrent/seeder'
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
+console.log(__dirname);
+const staticAssetPath = path.join(__dirname, '../static')
 
 startSeeding().then(() => {
     console.log("Starting Server")
     const app = express();
     const port = 3000;
 
+
+
     app.use(express.json());
 
 
+
+    // basic logging
     app.use((req,res,next) => {
         console.log('Route hit ', req.originalUrl);
         next();
@@ -70,6 +81,18 @@ startSeeding().then(() => {
             res.status(500).send('Error generating feed');
         }
     });
+
+
+    if (process.env.NODE_ENV !== 'development'){
+        app.use(express.static(staticAssetPath));
+        console.log("serving statics from ", staticAssetPath);
+
+        // All other GET requests not handled before will return our Vue app
+        app.get('*', (req, res) => {
+            console.log("Serving homepage off route" , req.path);
+            res.sendFile(path.join(staticAssetPath, 'index.html'));
+        });
+    }
 
 
     app.listen(port, () => {

@@ -1,17 +1,14 @@
 <script setup lang="ts">
-// import { ref } from 'vue'
 
-// defineProps<{ msg: string }>()
-
-// const count = ref(0)
 </script>
 
 <template>
-  <h1>Be The Disclosure</h1>>
+    <v-app-bar title="Be The Disclosure" elevation="3" density="default">
+
+    </v-app-bar>
+
 </template>
 
 <style scoped>
-/* .read-the-docs {
-  color: #888;
-} */
+
 </style>

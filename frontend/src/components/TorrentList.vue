@@ -10,7 +10,7 @@
           <v-card class="pa-3" outlined>
             <v-list-item-content>
               <v-list-item-title>{{ torrent.name }}</v-list-item-title>
-              <v-list-item-subtitle>{{ torrent.description }}</v-list-item-subtitle>
+              <v-list-item-subtitle >{{ torrent.description }}</v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
               <a :href="torrent.magnetLink">
@@ -23,10 +23,13 @@
                 Torrent Magnet
               </a>
             </v-list-item-action>
-            <v-list-item-subtitle>
+            <text-caption class="text-medium-emphasis ">
               Added on: {{ formatDate(torrent.createdAt) }}
-              <span v-if="torrent.source">, Source: {{ torrent.source }}</span>
-            </v-list-item-subtitle>
+              <span v-if="torrent.source">, Source: 
+                <v-list-item-subtitle>
+                  <a v-bind:href="torrent.source">{{ torrent.source }}</a>
+              </v-list-item-subtitle></span>
+            </text-caption>
           </v-card>
           <!-- Add a divider between list items, except after the last item -->
           <v-divider v-if="index < torrents.length - 1" />
@@ -68,4 +71,8 @@
   });
   </script>
   
-  
+  <style scoped>
+  .v-container {
+    padding-top:75px;
+  }
+</style>
