@@ -1,3 +1,13 @@
+
+.quiet {
+  opacity: var(--v-medium-emphasis-opacity);
+  font-size: .92rem;
+}
+
+body {
+  /* font-family: Georgia, serif */
+}
+/* 
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -76,4 +86,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-} */
+} */ */
