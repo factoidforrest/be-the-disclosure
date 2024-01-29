@@ -11,42 +11,6 @@ import chokidar from 'chokidar'
 const TypedWebTorrent = WebTorrent as WebTorrentType;
 export const client = new TypedWebTorrent({});
 
-
-
-// client.seed(filePath, (t) => {
-//     console.log(t.magnetURI);
-
-//     // const f = fs.openSync(path.resolve(torrentDir, 'mytorrent.torrent'), 'w');
-//     // fs.writeFileSync(f, t.torrentFile);
-//     // fs.closeSync(f);
-// });
-
-
-
-
-
-
-// async function hashFile(filePath: string) {
-//     const data = await fs.readFile(filePath);
-//     return crypto.createHash('sha256').update(data).digest('hex');
-// }
-
-// async function hashFolder(folderPath: string) {
-//     try {
-//         const files = await fs.readdir(folderPath);
-//         let folderHashString = '';
-//         for (const file of files) {
-//             const filePath = path.join(folderPath, file);
-//             const fileHash = await hashFile(filePath);
-//             folderHashString += fileHash;
-//         }
-//         return crypto.createHash('sha256').update(folderHashString).digest('hex');
-//     } catch (err) {
-//         console.error(`Error processing ${folderPath}: ${err}`);
-//         return null;
-//     }
-// }
-
 interface TorrentMeta {
     name: string;
     description: string;
@@ -101,7 +65,8 @@ async function processDirToTorrent(torrentDir: string){
 export const startSeeding = async () => {
     await addTorrents(torrentRoot);
     console.log('torrents are ', client.torrents)
-    // await startWatcher();
+    // TODO: BROKEN WATCHER
+    // await startWatcher(); 
 }
 
 

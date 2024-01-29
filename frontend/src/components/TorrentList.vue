@@ -1,7 +1,10 @@
 <template>
-        
-  <Accordion :activeIndex="0" :multiple="true" class="mx-0 md:mx-8 mt-6">
-    <AccordionTab v-for="(torrent) in torrents" :key="torrent.id" class="">
+  <Accordion :multiple="true" class="mx-0 md:mx-8 mt-6">
+    <span v-for="torrent in torrents" >ass2 {{ torrent.id }}</span>
+    <span>test</span>
+    <p>text-justify</p>
+
+    <AccordionTab  v-for="torrent in torrents" :key="torrent.id" class="">
       <template #header>
             <span class="flex align-items-center gap-2 w-full pr-8">
                 <!-- <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" shape="circle" /> -->
@@ -25,28 +28,18 @@
           <span class="m-1">Tag groups: <span class="font-light">(coming soon)</span></span>
 
         <Button class="p-2 m-1" severity="danger" label="Magnet Link" icon="pi pi-download" size="small" outlined @click="openMagnet(torrent.magnetLink)"/>
-        <Button class="p-2 m-1" label="Live Preview (experimental)" icon="pi pi-play" size="small" outlined/>
+        <Button class="p-2 m-1" label="Live Preview (experimental)" icon="pi pi-play" size="small" :outlined="!torrent.livePreview" @click="toggleLivePreview(torrent)" />
         </div>
         <div class="col-8">
           <!-- <h4 class="p-0 m-0">{{ torrent.name }}</h4> -->
             <p>{{ torrent.description }}</p>
         </div>
         <div class="col">
-            <div class="webtorrent-container"></div>
+            <div v-if="torrent.livePreview" class="webtorrent-container">
+              <LivePreview :torrent="torrent" :client="client"/>
+            </div>
         </div>
     </div>
-    </AccordionTab>
-    <AccordionTab header="Header II">
-        <p class="m-0">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo
-            enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
-        </p>
-    </AccordionTab>
-    <AccordionTab header="Header III">
-        <p class="m-0">
-            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in
-            culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
-        </p>
     </AccordionTab>
 </Accordion>
 <!-- 
@@ -90,20 +83,29 @@
   </template>
   
 <script lang="ts">
-
+  // @ts-ignore
+  import WebTorrentHybrid from 'webtorrent-hybrid';
+  import {type WebTorrent as WebTorrentType} from '@types/webtorrent';
   import { defineComponent } from 'vue';
   import { BiMagnetFill } from "oh-vue-icons/icons"
   import {api, Torrent} from '../api'
+  import LivePreview from './LivePreview.vue'
+  import { ref } from 'vue';
+
+
+  const TypedWebTorrent = WebTorrentHybrid as WebTorrentType;
 
   export default defineComponent({
       name: 'TorrentList',
       data() {
       return {
-        torrents: [] as Torrent[]
+        torrents: [] as Torrent[],
+        client: new TypedWebTorrent({}),
       };
     },
     components: {
-      BiMagnetFill
+      BiMagnetFill,
+      LivePreview
     },
     methods: {
       formatDate(dateString: string) {
@@ -117,25 +119,64 @@
       openMagnet(link: string) {
         // @ts-ignore
         window.location.href = link;
+      },
+      toggleLivePreview(torrent: Torrent){
+        console.log(torrent);
+        // @ts-ignore THIS IS AUTOMATIC UNWRAPPED WTH
+        torrent.livePreview = !torrent.livePreview;
+        console.log('livepreivew is ', torrent.livePreview)
       }
     },
     async mounted() {
+
         try {
         this.torrents = await api.list();
         
         } catch (error) {
         console.error('There was an error fetching the torrents:', error);
         }
+
+        // var torrentId = 'magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2F&xs=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel.torrent'
+
+        
+        
+
+        
+        // this.client.on('error', err => {
+        //   console.log('[+] Webtorrent error: ' + err);
+        // });
+
+
+
+        // this.client.add(torrentId, (torrent) => {
+        //   // const interval = setInterval(() => {
+        //   //   // console.log('[+] Progress: ' + (torrent.progress * 100).toFixed(1) + '%')
+        //   //   this.setState({torrentProgress: (torrent.progress * 100).toFixed(1) + '%'});
+        //   // }, 500);
+        //   // torrent.on('done', () => {
+        //   //   console.log('Progress: 100%');
+        //   //   clearInterval(interval);
+        //   // })
+
+        //   torrent.files.forEach((file) => {
+        //     file.appendTo('body');
+        //   })
+
+        //   });
   }
   });
   </script>
   
-  <style scoped>
+  <style>
   .v-container {
     padding-top:75px;
   }
 
   .torrent-container {
     box-shadow: 0px 4px 4px -2px grey;
+  }
+
+  .p-accordion-content{
+    padding: 0;
   }
 </style>

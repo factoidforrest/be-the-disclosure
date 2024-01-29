@@ -1,9 +1,9 @@
 import { defineConfig } from 'vite'
 
 import Components from 'unplugin-vue-components/vite';
-
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import vue from '@vitejs/plugin-vue'
-// import vuetify from "vite-plugin-vuetify"
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -14,6 +14,7 @@ export default defineConfig({
       dts: 'src/components.d.ts',
       dirs: ['src/**/*', 'node_modules/primevue/**/*'],
     }),
+    nodePolyfills(),
   ],
   server: {
     proxy: {
