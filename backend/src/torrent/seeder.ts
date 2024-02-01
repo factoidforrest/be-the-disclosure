@@ -22,7 +22,7 @@ interface TorrentMeta {
 const torrentRoot = process.env.TORRENT_DIR || path.resolve(import.meta.dir + '/../torrents/');
 
 // set up deluge API client
-const delugeUrl = 'http://localhost:8112/json';
+const delugeUrl = process.env.DELUGE_URI || 'http://localhost:8112/json';
 const delugePass = process.env.DELUGE_PASSWORD || 'deluge'
 const deluge = new Deluge(delugeUrl, delugePass, torrentRoot);
 
