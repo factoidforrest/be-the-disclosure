@@ -48,14 +48,17 @@ async function processDirToTorrent(torrentDir: string){
     const torrentMeta = await import(path.join(torrentDir, 'meta.json')) as TorrentMeta;
 
     const contentsPath = path.join(torrentDir, `contents`);
+    // since webtorrent seems awful or even broken at seeding, also add it to a local deluge client for that initial seed
+    // we also need to wrap the torrent name like this so that it will find it since deluge automatically wraps files like this in the torrent name, annoying and clunky
+    const contentsPathWithName = path.join(contentsPath, torrentMeta.name);
+
     console.log('creating a torrent from folder', contentsPath)
     // const folderHash = await hashFolder(contentsPath);
     const magnetLink = await new Promise<string>((res, rej) => {
         // @ts-ignore
-        client.seed(contentsPath, {name: torrentMeta.name }, (torrent) => {
-            // since webtorrent seems awful or even broken at seeding, also add it to a local deluge client for that initial seed
-            // we also need to wrap the torrent name like this so that it will find it since deluge automatically wraps files like this in the torrent name, annoying and clunky
-            deluge.add(torrent.magnetURI, `${contentsPath}/${torrentMeta.name}`).then(() => {
+        client.seed(contentsPathWithName, {name: torrentMeta.name }, (torrent) => {
+       
+            deluge.add(torrent.magnetURI, contentsPath).then(() => {
                 console.log('deluge added');
                 res(torrent.magnetURI);
             }).catch((e:unknown) => rej(e))
