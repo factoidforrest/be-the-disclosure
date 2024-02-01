@@ -6,6 +6,8 @@ import fs from 'fs/promises';
 import crypto from 'crypto';
 import {db, TorrentRecord} from '../db/db'
 import chokidar from 'chokidar'
+import Deluge from './deluge-client';
+
 
 
 const TypedWebTorrent = WebTorrent as WebTorrentType;
@@ -18,6 +20,13 @@ interface TorrentMeta {
 }
 
 const torrentRoot = process.env.TORRENT_DIR || path.resolve(import.meta.dir + '/../torrents/');
+
+// set up deluge API client
+const delugeUrl = 'http://localhost:8112/json';
+const delugePass = process.env.DELUGE_PASSWORD || 'deluge'
+const deluge = new Deluge(delugeUrl, delugePass, torrentRoot);
+
+
 
 async function addTorrents(dir: string) {
     try {
@@ -43,8 +52,16 @@ async function processDirToTorrent(torrentDir: string){
     // const folderHash = await hashFolder(contentsPath);
     const magnetLink = await new Promise<string>((res, rej) => {
         // @ts-ignore
-        client.seed(contentsPath, {name: torrentMeta.name}, (torrent) => {
-            res(torrent.magnetURI);
+        client.seed(contentsPath, {name: torrentMeta.name }, (torrent) => {
+            // since webtorrent seems awful or even broken at seeding, also add it to a local deluge client for that initial seed
+            deluge.add(torrent.magnetURI, contentsPath).then(() => {
+                console.log('deluge added');
+                res(torrent.magnetURI);
+            }).catch((e:unknown) => rej(e))
+
+
+
+
         })
     })
 
@@ -63,6 +80,7 @@ async function processDirToTorrent(torrentDir: string){
 
 
 export const startSeeding = async () => {
+    console.log('IS IT CONNECTED?????????', await deluge.isConnected())
     await addTorrents(torrentRoot);
     console.log('torrents are ', client.torrents)
     // TODO: BROKEN WATCHER
