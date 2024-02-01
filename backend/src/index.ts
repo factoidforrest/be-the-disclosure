@@ -17,7 +17,7 @@ const staticAssetPath = path.join(__dirname, '../static')
 startSeeding().then(() => {
     console.log("Starting Server")
     const app = express();
-    const port = 3000;
+    const port = process.env.NODE_ENV === "production" ? 80 : 3000;
 
 
 
