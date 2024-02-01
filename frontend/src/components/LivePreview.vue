@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {type Torrent} from '../api';
-//@ts-ignore
-import {type Instance} from '@types/webtorrent';
+import {type Instance} from '../types/webtorrent';
 import { ref } from 'vue';
 import { Ref } from 'vue';
 import { onMounted } from 'vue';

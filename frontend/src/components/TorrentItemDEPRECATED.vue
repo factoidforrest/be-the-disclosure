@@ -39,7 +39,7 @@
 </template>
 <script setup lang="ts">
 import {type Torrent} from '../api';
-import {type Instance} from '@types/webtorrent';
+import {type Instance} from '../types/webtorrent';
 
 
 export interface Props {

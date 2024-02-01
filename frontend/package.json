@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
-    "@types/webtorrent": "^0.109.7",
     "axios": "^1.6.3",
     "oh-vue-icons": "^1.0.0-rc3",
     "primeflex": "^3.3.1",

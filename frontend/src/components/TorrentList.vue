@@ -85,12 +85,11 @@
 <script lang="ts">
   // @ts-ignore
   import WebTorrentHybrid from 'webtorrent-hybrid';
-  import {type WebTorrent as WebTorrentType} from '@types/webtorrent';
+  import {type WebTorrent as WebTorrentType} from '../types/webtorrent';
   import { defineComponent } from 'vue';
   import { BiMagnetFill } from "oh-vue-icons/icons"
   import {api, Torrent} from '../api'
   import LivePreview from './LivePreview.vue'
-  import { ref } from 'vue';
 
 
   const TypedWebTorrent = WebTorrentHybrid as WebTorrentType;
