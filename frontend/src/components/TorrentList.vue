@@ -30,7 +30,7 @@
         <Button class="p-2 m-1" severity="danger" label="Magnet Link" icon="pi pi-download" size="small" outlined @click="openMagnet(torrent.magnetLink)"/>
         <Button class="p-2 m-1" label="Live Preview (experimental)" icon="pi pi-play" size="small" :outlined="!torrent.livePreview" @click="toggleLivePreview(torrent)" />
         </div>
-        <div class="col-8">
+        <div class="col-8"> 
           <!-- <h4 class="p-0 m-0">{{ torrent.name }}</h4> -->
             <p>{{ torrent.description }}</p>
         </div>

@@ -16,13 +16,13 @@ export type Torrent = {
     createdAt: string;
     source: string;
     description: string;
-    livePreview: Ref<boolean>;
+    livePreview: boolean;
 };
 
 export const api = {
     list: async (): Promise<Torrent[]> => {
         const res = await ax.get<Torrent[]>('/list')
-        res.data.forEach((t) => t.livePreview = ref<boolean>(false));
+        res.data.forEach((t) => t.livePreview = false);
         return res.data
     }
 }
