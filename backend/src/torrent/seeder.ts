@@ -47,7 +47,7 @@ async function processDirToTorrent(torrentDir: string){
     console.log('torrentdir is ', torrentDir)
     const torrentMeta = await import(path.join(torrentDir, 'meta.json')) as TorrentMeta;
 
-    const contentsPath = path.join(torrentDir, 'contents');
+    const contentsPath = path.join(torrentDir, `contents/${torrentMeta.name}`);
     console.log('creating a torrent from folder', contentsPath)
     // const folderHash = await hashFolder(contentsPath);
     const magnetLink = await new Promise<string>((res, rej) => {
