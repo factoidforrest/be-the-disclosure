@@ -1,20 +1,28 @@
 <template>
-  <div>
-    <h1>Subscribe to Torrent RSS Feed</h1>
-    <p>
-      To subscribe to the RSS feed of torrents, follow these steps:
-    </p>
-    <ol>
-      <li>Open your torrent client (e.g., qBittorrent).</li>
-      <li>Navigate to the RSS feed section.</li>
-      <li>Click on the "Add RSS feed" button.</li>
-      <li>Enter the RSS feed URL:</li>
-      <li>{{ rssFeedUrl }}</li> <!-- Replace with the actual RSS feed URL -->
-      <li>Click on the "Subscribe" button.</li>
-    </ol>
-    <p>
-      Once you have subscribed to the RSS feed, your torrent client will automatically download new torrents that match the specified criteria.
-    </p>
+  <div class="about mx-0 md:mx-8 mt-6 mx-2">
+    <Fieldset legend="Feed URL">
+      <p class="m-0 font-bold">
+        {{ rssFeedUrl }}
+      </p>
+    </Fieldset>
+    <h2>QBittorrent Instructions</h2>
+    <div class="instructions font-light">
+      <p>
+        To subscribe to the RSS feed of torrents, follow these steps:
+      </p>
+      <ol>
+        <li> Go to Tools > Preferences </li>
+        <li>Head to the RSS section on the bottom left, and then check "enable fetching RSS feeds". Set a high maximum article number like 100.</li>
+        <li>While here also check "enable auto downloading of RSS torrents"</li>
+        <li>Save settings and then head to the new RSS (0) tab on the top bar.</li>
+        <li>Hit new subscription and enter the RSS feed URL:</li>
+        <li>{{ rssFeedUrl }}</li> <!-- Replace with the actual RSS feed URL -->
+        <li>Click on the "Subscribe" button.</li>
+      </ol>
+      <p>
+        Once you have subscribed to the RSS feed, your torrent client should automatically download new torrents, thus joining the swarm to help make catastropic disclosure possible.
+      </p>
+    </div>
   </div>
 </template>
 
@@ -25,7 +33,7 @@ export default defineComponent({
   name: 'Subscribe',
   data() {
     return {
-      rssFeedUrl: 'https://example.com/rss-feed', // Replace with the actual RSS feed URL
+      rssFeedUrl: window.location.origin + '/torrent-feed' , // Replace with the actual RSS feed URL
     };
   },
 });

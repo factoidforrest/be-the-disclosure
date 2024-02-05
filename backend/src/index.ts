@@ -54,9 +54,9 @@ startSeeding().then(() => {
             const feed = new Feed({
                 title: 'UFO Torrent Feed',
                 description: 'Feed of ufo content for mirroring',
-                link: 'http://localhost:3000/torrent-feed',
+                link: 'https://bethedisclosure.com/torrent-feed',
                 language: 'en',
-                id: 'http://localhost:3000',
+                id: 'https://bethedisclosure.com',
                 copyright: 'GPL',
             });
 

@@ -1,5 +1,5 @@
 <template>
-  <Accordion :multiple="true" class="mx-0 md:mx-8 mt-6">
+  <Accordion :multiple="true" class="mx-0 md:mx-8 mt-6 torrent-list">
     <span v-for="torrent in torrents" >ass2 {{ torrent.id }}</span>
     <span>test</span>
     <p>text-justify</p>
@@ -26,7 +26,10 @@
           <!-- <Button class="m-1" link icon="pi pi-users" badge="8" badgeClass="p-badge-danger">Preview Content</Button> -->
           <!-- <a>Preview Content <span class="font-light">(experimental)</span></a> -->
           <span class="m-1">Tag groups: <span class="font-light">(coming soon)</span></span>
-        <Button class="p-2 m-1" severity="danger" label="Magnet Link" icon="pi pi-download" size="small" outlined @click="openMagnet(torrent.magnetLink)"/>
+          <a :href="torrent.magnetLink">
+            <Button class="p-2 m-1" severity="danger" label="Magnet Link" icon="pi pi-download" size="small" outlined/>
+
+          </a>
         <!-- <Button class="p-2 m-1" label="Live Preview (coming soon)" icon="pi pi-play" size="small" :outlined="!torrent.livePreview" @click="toggleLivePreview(torrent)" /> -->
         <Button class="p-2 m-1" label="Live Preview (coming soon)" icon="pi pi-play" size="small" :outlined="!torrent.livePreview"  />
 
@@ -179,4 +182,11 @@
   .p-accordion-content{
     padding: 0;
   }
+
+  .torrent-list {
+    button {
+      width: 100%;
+    }
+  }
+
 </style>

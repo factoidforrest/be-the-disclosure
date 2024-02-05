@@ -9,14 +9,14 @@
   <div class="header shadow-div grid">
     <div class="col-12 md:col-6 flex flex-column">
       <h1 class="title">
-        Be The Disclosure
+        Be The Disclosure <span class="font-light text-sm">(beta)</span>
       </h1>
       <p class="font-light font-xs m-0">
         Defeating adversarial censorship through peer-to-peer torrenting.
       </p>
     </div>
 
-    <div class="col-12 md:col-6 flex flex-row gap-3 justify-content-center md:justify-content-end align-items-end">
+    <div class="col-12 md:col-6 flex flex-row gap-3 justify-content-center align-items-end md:pl-5">
       <router-link
         v-slot="{ isActive }"
         to="/"
@@ -40,7 +40,7 @@
           severity="secondary"
           link
         >
-          What is this?
+          How this works
         </Button>
       </router-link>
       <router-link
@@ -60,7 +60,7 @@
       <router-link
         v-slot="{ isActive }"
 
-        to="/contact"
+        to="/upload"
       >
         <Button
           :class="{ active: isActive }"
@@ -68,7 +68,7 @@
           :disabled="isActive"
           severity="secondary"
         >
-          Contact
+          Upload
         </Button>
       </router-link>
     </div>

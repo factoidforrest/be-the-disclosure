@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import TorrentList from './views/torrent-list/TorrentList.vue';
 import About from './views/about/About.vue';
-import Subscribe from './views/subscribe/Subscribe.vue'; // Import the Subscribe component
+import Subscribe from './views/subscribe/Subscribe.vue';
+import Upload from './views/upload/Upload.vue'; // Import the Upload component
 
 
 const routes = [
@@ -16,9 +17,14 @@ const routes = [
         component: About
     },
     {
-        path: '/subscribe', // Add the route for the Subscribe component
+        path: '/subscribe',
         name: 'Subscribe',
         component: Subscribe
+    },
+    {
+        path: '/upload', // Add the route for the Upload component
+        name: 'Upload',
+        component: Upload
     }
 ];
 

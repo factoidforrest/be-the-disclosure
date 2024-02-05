@@ -8,7 +8,7 @@ import PrimeVue from 'primevue/config';
 import '/node_modules/primeflex/primeflex.css'
 
 
-import 'primevue/resources/themes/lara-light-green/theme.css'
+import 'primevue/resources/themes/aura-light-blue/theme.css'
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css'
 
