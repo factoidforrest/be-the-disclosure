@@ -1,19 +1,15 @@
 <script setup lang="ts">
-import TorrentList from './components/TorrentList.vue';
-import Header from './components/Header.vue';
+import Header from './components/PageHeader.vue';
 
-
+import {} from 'vue-router';
 
 
 </script>
 
 <template>
+  <Header />
 
-    <Header></Header>
-
-      <TorrentList/>
-
-
+  <router-view />
 </template>
 
 <style scoped>

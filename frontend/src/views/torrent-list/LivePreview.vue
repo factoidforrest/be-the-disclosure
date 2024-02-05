@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {type Torrent} from '../api';
-import {type Instance} from '../types/webtorrent';
-import { ref } from 'vue';
+import WebTorrent, {type Instance} from '../types/webtorrent';
+import { ref, reactive } from 'vue';
 import { Ref } from 'vue';
 import { onMounted } from 'vue';
 
@@ -12,7 +12,7 @@ export interface Props {
 const props = defineProps<Props>()
 
 
-const fetchedTorrent: Ref<Instance['torrents'][number] | null> = ref(null);
+const fetchedTorrent: Ref<WebTorrent.Torrent | null> = ref(null);
  
 onMounted(() => {
 
@@ -24,9 +24,9 @@ onMounted(() => {
         console.log('[+] Webtorrent error: ' + err);
     });
 
-    props.client.add(props.torrent.magnetLink, (torrent) => {
-
-        fetchedTorrent.value = torrent;
+    findOrCreateTorrent(props.client, props.torrent.magnetLink).then((torrent) => {
+        fetchedTorrent.value = reactive(torrent);
+        console.log('torrent added is ', torrent)
         // const interval = setInterval(() => {
         //     // console.log('[+] Progress: ' + (torrent.progress * 100).toFixed(1) + '%')
         //     this.setState({torrentProgress: (torrent.progress * 100).toFixed(1) + '%'});
@@ -48,11 +48,36 @@ onMounted(() => {
             file.appendTo(`body`);
         })
         console.log(torrent);
+    })
+      
 
     });
 
 // const randIdForPreview = ref<string>(Math.random().toString())
-}) 
+
+
+
+function findOrCreateTorrent(client: Instance, magnetURI: string): Promise<WebTorrent.Torrent> {
+    return new Promise<WebTorrent.Torrent>((res, rej) => {
+        try{
+            const existing = client.torrents.find((t) => t.magnetURI === magnetURI);
+            console.log('searching through ', client.torrents)
+            if (existing){
+                console.log('found existing torrent')
+                return res(existing);
+            }
+
+            props.client.add(props.torrent.magnetLink, (newTorrent) => {
+                console.log('adding new torrent')
+                res(newTorrent);
+            });
+        } catch (e) {
+            rej(e);
+        }
+
+    })
+    
+}
 
     
 

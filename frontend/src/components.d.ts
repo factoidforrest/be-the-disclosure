@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    About: typeof import('./views/about/About.vue')['default']
     Accordion: typeof import('./../node_modules/primevue/accordion/Accordion.vue')['default']
     AccordionTab: typeof import('./../node_modules/primevue/accordiontab/AccordionTab.vue')['default']
     Angledoubledown: typeof import('./../node_modules/primevue/icons/angledoubledown/index.vue')['default']
@@ -190,7 +191,7 @@ declare module 'vue' {
     Knob: typeof import('./../node_modules/primevue/knob/Knob.vue')['default']
     LastPageLink: typeof import('./../node_modules/primevue/paginator/LastPageLink.vue')['default']
     Listbox: typeof import('./../node_modules/primevue/listbox/Listbox.vue')['default']
-    LivePreview: typeof import('./components/LivePreview.vue')['default']
+    LivePreview: typeof import('./views/torrent-list/LivePreview.vue')['default']
     MegaMenu: typeof import('./../node_modules/primevue/megamenu/MegaMenu.vue')['default']
     MegaMenuSub: typeof import('./../node_modules/primevue/megamenu/MegaMenuSub.vue')['default']
     Menu: typeof import('./../node_modules/primevue/menu/Menu.vue')['default']
@@ -205,6 +206,7 @@ declare module 'vue' {
     OrganizationChart: typeof import('./../node_modules/primevue/organizationchart/OrganizationChart.vue')['default']
     OrganizationChartNode: typeof import('./../node_modules/primevue/organizationchart/OrganizationChartNode.vue')['default']
     OverlayPanel: typeof import('./../node_modules/primevue/overlaypanel/OverlayPanel.vue')['default']
+    PageHeader: typeof import('./components/PageHeader.vue')['default']
     PageLinks: typeof import('./../node_modules/primevue/paginator/PageLinks.vue')['default']
     Paginator: typeof import('./../node_modules/primevue/paginator/Paginator.vue')['default']
     Panel: typeof import('./../node_modules/primevue/panel/Panel.vue')['default']
@@ -246,6 +248,7 @@ declare module 'vue' {
     Star: typeof import('./../node_modules/primevue/icons/star/index.vue')['default']
     Starfill: typeof import('./../node_modules/primevue/icons/starfill/index.vue')['default']
     Steps: typeof import('./../node_modules/primevue/steps/Steps.vue')['default']
+    Subscribe: typeof import('./views/subscribe/Subscribe.vue')['default']
     TableBody: typeof import('./../node_modules/primevue/datatable/TableBody.vue')['default']
     TableFooter: typeof import('./../node_modules/primevue/datatable/TableFooter.vue')['default']
     TableHeader: typeof import('./../node_modules/primevue/datatable/TableHeader.vue')['default']
@@ -266,7 +269,7 @@ declare module 'vue' {
     ToggleButton: typeof import('./../node_modules/primevue/togglebutton/ToggleButton.vue')['default']
     Toolbar: typeof import('./../node_modules/primevue/toolbar/Toolbar.vue')['default']
     TorrentItemDEPRECATED: typeof import('./components/TorrentItemDEPRECATED.vue')['default']
-    TorrentList: typeof import('./components/TorrentList.vue')['default']
+    TorrentList: typeof import('./views/torrent-list/TorrentList.vue')['default']
     Trash: typeof import('./../node_modules/primevue/icons/trash/index.vue')['default']
     Tree: typeof import('./../node_modules/primevue/tree/Tree.vue')['default']
     TreeNode: typeof import('./../node_modules/primevue/tree/TreeNode.vue')['default']
