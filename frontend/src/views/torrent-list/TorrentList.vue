@@ -93,7 +93,6 @@
   import { defineComponent } from 'vue';
   import { BiMagnetFill } from "oh-vue-icons/icons"
   import {api, Torrent} from '../../api'
-  import LivePreview from './LivePreview.vue'
 
 
   const TypedWebTorrent = WebTorrentHybrid as WebTorrentType;
@@ -107,8 +106,8 @@
       };
     },
     components: {
-      BiMagnetFill,
-      LivePreview
+      BiMagnetFill
+      
     },
     methods: {
       formatDate(dateString: string) {

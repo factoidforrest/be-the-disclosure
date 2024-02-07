@@ -33,6 +33,7 @@ export default defineComponent({
   name: 'Subscribe',
   data() {
     return {
+      //@ts-ignore
       rssFeedUrl: window.location.origin + '/torrent-feed' , // Replace with the actual RSS feed URL
     };
   },

@@ -8,7 +8,7 @@
 
   <div class="header shadow-div grid">
     <div class="col-12 md:col-6 flex flex-column">
-      <h1 class="title">
+      <h1 class="header-title">
         Be The Disclosure <span class="font-light text-sm">(beta)</span>
       </h1>
       <p class="font-light font-xs m-0">
@@ -75,7 +75,7 @@
   </div>
 </template>
 
-<style scoped>
+<style>
 .header {
     width: 100%;
     padding: 20px;
@@ -86,7 +86,7 @@
     box-shadow: 0 6px 4px -4px gray;
 }
 
-.title {
+.header-title {
     font-size: 1.3rem;
     min-width: 0;
     font-weight: 400;
