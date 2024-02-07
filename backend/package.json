@@ -38,6 +38,7 @@
   "scripts": {
     "dev": "NODE_ENV='development' tsx --watch ./src/index.ts",
     "lint": "eslint ./src/**/*.ts",
+    "build:frontend":"cd ../frontend && rm -rf dist && bun run build && cp -r -f ./dist ../backend/static && cd ../backend",
     "prod": "rm -rf static && cd ../frontend && rm -rf dist && bun run build && cp -r ./dist ../backend/static && cd ../backend && NODE_ENV=production tsx ./src/index.ts",
     "prod-fast": "NODE_ENV=production tsx ./src/index.ts"
   }
