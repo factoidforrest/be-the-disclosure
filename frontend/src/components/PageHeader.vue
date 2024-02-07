@@ -6,7 +6,7 @@
   <!-- <v-app-bar title="Be The Disclosure" elevation="3" density="default">
             </v-app-bar> -->
 
-  <div class="header shadow-div grid">
+  <div class="header page-header shadow-div grid">
     <div class="col-12 md:col-6 flex flex-column">
       <h1 class="header-title">
         Be The Disclosure <span class="font-light text-sm">(beta)</span>
@@ -76,7 +76,7 @@
 </template>
 
 <style>
-.header {
+.page-header {
     width: 100%;
     padding: 20px;
     padding-left: 50px;

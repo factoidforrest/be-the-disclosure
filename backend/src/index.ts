@@ -83,7 +83,7 @@ startSeeding().then(() => {
     });
 
 
-    if (process.env.NODE_ENV !== 'development'){
+    if (true){
         app.use(express.static(staticAssetPath));
         console.log("serving statics from ", staticAssetPath);
 
