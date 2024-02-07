@@ -6,12 +6,13 @@
         :key="index"
         class="faq-item"
       >
-        <h3 class="text-center">
+        <h3 class="text-center md:text-left underline">
           {{ question.question }}
         </h3>
-        <p class="font-light font-xs m-0">
-          {{ question.answer }}
-        </p>
+        <p
+          class="font-light font-xs m-0"
+          v-html="question.answer"
+        />
       </div>
     </div>
   </div>
@@ -55,7 +56,7 @@ export default defineComponent({
         },
         {
           question: 'How can you help?',
-          answer: `You can subscribe to the torrent RSS feed and become part of the swarm. Your torrent client (like qBittorrent) will 
+          answer: `You can <a href="/subscribe">subscribe</a> to the torrent RSS feed and become part of the swarm. Your torrent client (like qBittorrent) will 
           automatically fetch new files from the swarm as they become available, ensuring that distribution of the files cannot be stopped
            even if this server goes down. As a bonus, you will find interesting UFO videos and documents downloaded on your computer
            and ready to view when you check your client. Ensure that files are set to seed forever.

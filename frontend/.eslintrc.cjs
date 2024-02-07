@@ -29,6 +29,9 @@ module.exports = {
         "vue"
     ],
     "rules": {
-        "no-unused-vars": "warn"
+        "no-unused-vars": "warn",
+        "vue/max-len": ["error", {
+            "code": 140,
+        }]
       }
 }

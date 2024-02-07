@@ -6,7 +6,7 @@
 
     <AccordionTab  v-for="torrent in torrents" :key="torrent.id" class="">
       <template #header>
-            <div class="flex gap-2 w-full  flex-column md:flex-row md:justify-content-end md:align-items-end">
+            <div class="flex gap-2 w-full  flex-column md:flex-row md:align-items-end">
                 <!-- <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" shape="circle" /> -->
               <span class="font-bold white-space-nowrap">{{torrent.name}}</span>
                 <!-- <Badge value="3" class="ml-auto" /> -->
