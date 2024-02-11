@@ -16,7 +16,7 @@
       </p>
     </div>
 
-    <div class="col-12 md:col-6 flex flex-row gap-3 justify-content-center align-items-end md:pl-5">
+    <div class="col-12 md:col-6 flex flex-row md:gap-3 justify-content-center align-items-end md:pl-5">
       <router-link
         v-slot="{ isActive }"
         to="/"
