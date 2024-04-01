@@ -1,5 +1,4 @@
 import express from 'express';
-import RSS from 'rss';
 import {db, type TorrentRecord} from './db/db'
 import path from 'path'
 
@@ -17,7 +16,7 @@ const staticAssetPath = path.join(__dirname, '../static')
 startSeeding().then(() => {
     console.log("Starting Server")
     const app = express();
-    const port = process.env.NODE_ENV === "production" ? 80 : 3000;
+    const port = 3000;
 
 
 
