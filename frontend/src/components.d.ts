@@ -199,6 +199,7 @@ declare module 'vue' {
     Knob: typeof import('./../node_modules/primevue/knob/Knob.vue')['default']
     LastPageLink: typeof import('./../node_modules/primevue/paginator/LastPageLink.vue')['default']
     Listbox: typeof import('./../node_modules/primevue/listbox/Listbox.vue')['default']
+    LivePreview: typeof import('./views/torrent-list/LivePreview.vue')['default']
     MegaMenu: typeof import('./../node_modules/primevue/megamenu/MegaMenu.vue')['default']
     MegaMenuSub: typeof import('./../node_modules/primevue/megamenu/MegaMenuSub.vue')['default']
     Menu: typeof import('./../node_modules/primevue/menu/Menu.vue')['default']

@@ -32,10 +32,10 @@ export default defineComponent({
         },
         {
           question: 'Why is this necessary?',
-          answer: `As users of the internet, we typically assume that spaces such as YouTube, Facebook, and X are user-curated spaces safe
+          answer: `As users of the internet, we think of sites like YouTube, Facebook, and X as user-curated spaces safe
           from tampering, shaping, and censorship. As recent revelations (or even a moments consideration) have shown 
           about the connections between the US government and social networks, 
-          this is not the case. Moderators at tech companies censor information continuously at the behest of the government who claims that they are harmful disinformation.
+          this is not the case. Moderators at tech companies censor information continuously at the behest of the government who claims to be curbing disinformation online.
           To succeed, we must aknowledge that NHI information exists in an adversarial environment in which clandestine efforts 
           by the CIA, the DOE, and others are ongoing to suppress it. Hardened content distribution is 
           necessary for "Catastropic Disclosure" to even be possible. 

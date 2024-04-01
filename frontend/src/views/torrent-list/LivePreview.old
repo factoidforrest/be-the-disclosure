@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {type Torrent} from '../api';
-import WebTorrent, {type Instance} from '../types/webtorrent';
+import {type Torrent} from '../../api';
+import WebTorrent, {type Instance} from '../../types/webtorrent';
 import { ref, reactive } from 'vue';
 import { Ref } from 'vue';
 import { onMounted } from 'vue';
@@ -24,7 +24,8 @@ onMounted(() => {
         console.log('[+] Webtorrent error: ' + err);
     });
 
-    findOrCreateTorrent(props.client, props.torrent.magnetLink).then((torrent) => {
+    const fakeMagnet ="magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2F&xs=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel.torrent"
+    findOrCreateTorrent(props.client, fakeMagnet).then((torrent) => {
         fetchedTorrent.value = reactive(torrent);
         console.log('torrent added is ', torrent)
         // const interval = setInterval(() => {
@@ -36,6 +37,10 @@ onMounted(() => {
             // clearInterval(interval);
         })
 
+        torrent.on('download', () => {
+            console.log("DOWNLOAD!")
+        })
+
         // this.setState({
         //     torrentInfoHash: torrent.infoHash,
         //     torrentMagnetURI: torrent.magnetURI,
@@ -45,9 +50,14 @@ onMounted(() => {
 
         // TODO Figure out a better way to render these files 
         torrent.files.map((file) => {
-            file.appendTo(`body`);
+            console.log('attempting to append file', file)
+            file.appendTo(`.torrent-livepreview-test`);
         })
         console.log(torrent);
+
+        setTimeout(() => {
+            console.log('webtorrent is', props.client)
+        },10000)
     })
       
 
@@ -90,6 +100,7 @@ function findOrCreateTorrent(client: Instance, magnetURI: string): Promise<WebTo
         <template #header>
             <span class="text-center" style="{text-align: center}">Live Preview</span>
         </template>
+        <div class="torrent-livepreview-test"></div>
         <template #content>
             <p v-if="!fetchedTorrent">Failed to start torrent. Sorry, this is experimental. Download using the magnet link and a torrent client to view this file.</p>
             {{ fetchedTorrent?.progress }}% Loaded, {{ fetchedTorrent?.numPeers }} peers    

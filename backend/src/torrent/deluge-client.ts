@@ -103,7 +103,6 @@ export default class DelugeHandler {
      */
   async isConnected (): Promise<boolean> {
     const response = await this.secondCalls('web.connected', []);
-    console.log('deluge connected res ', response);
     return response && response.result === true;
   }
 
@@ -175,7 +174,6 @@ export default class DelugeHandler {
         method: 'auth.login'
       });
 
-      console.log('auth res', response);
 
       if (response && response.headers && response.headers['set-cookie']) { this.SESSION_COOKIE = response.headers['set-cookie'][0].split(';')[0]; }
     } else {
@@ -220,7 +218,7 @@ export default class DelugeHandler {
         Cookie: this.SESSION_COOKIE
       }
     });
-    console.log('called deluge successfully');
+    console.log('called deluge successfully at ', this.DELUGE_URL);
     return res;
   }
 

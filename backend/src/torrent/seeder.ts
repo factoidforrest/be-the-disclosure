@@ -39,49 +39,66 @@ async function addTorrents (dir: string) {
 
 async function processDirToTorrent (torrentDir: string) {
   console.log('torrentdir is ', torrentDir);
-  const torrentMeta = await import(path.join(torrentDir, 'meta.json')) as TorrentMeta;
+  try {
+    const torrentMeta = await import(path.join(torrentDir, 'meta.json')) as TorrentMeta;
 
-  const contentsPath = path.join(torrentDir, 'contents');
-  // since webtorrent seems awful or even broken at seeding, also add it to a local deluge client for that initial seed
-  // we also need to wrap the torrent name like this so that it will find it since deluge automatically wraps files like this in the torrent name, annoying and clunky
-  const contentsPathWithName = path.join(contentsPath, torrentMeta.name);
+    // since webtorrent seems awful or even broken at seeding, also add it to a local deluge client for that initial seed
+    // we also need to wrap the torrent name like this so that it will find it since deluge automatically wraps files like this in the torrent name, annoying and clunky
 
-  console.log('creating a torrent from folder', contentsPath);
-  // const folderHash = await hashFolder(contentsPath);
-  const magnetLink = await new Promise<string>((res, rej) => {
-    // @ts-expect-error
-    client.seed(contentsPathWithName, { name: torrentMeta.name }, (torrent) => {
-      deluge.add(torrent.magnetURI, contentsPath).then(() => {
-        console.log('deluge added');
-        res(torrent.magnetURI);
-      }).catch((e: unknown) => { rej(e); });
+    console.log('creating a torrent from folder', torrentDir);
+    const torrentName = path.basename(torrentDir);
+    // const folderHash = await hashFolder(contentsPath);
+    const magnetLink = await new Promise<string>((res, rej) => {
+      // @ts-expect-error
+      client.seed(torrentDir, { name: torrentName }, (torrent) => {
+        deluge.add(torrent.magnetURI, torrentRoot).then(() => {
+          console.log('deluge added');
+          res(torrent.magnetURI);
+        }).catch((e: unknown) => { rej(e); });
+      });
     });
-  });
 
-  const torrentForUpsert: TorrentRecord = {
-    ...torrentMeta,
-    magnetLink
-  };
-  console.log('created torrent and attempting upsert', torrentForUpsert);
+    const torrentForUpsert: TorrentRecord = {
+      ...torrentMeta,
+      name: torrentName,
+      magnetLink
+    };
+    console.log('created torrent and attempting upsert', torrentForUpsert);
 
-  db.upsertVideo(torrentForUpsert); // AWAITING THIS IS BROKEN, WEIRD AF
-  console.log('Torrent created and seeding');
+    db.upsertVideo(torrentForUpsert); // AWAITING THIS IS BROKEN, WEIRD AF
+    console.log('Torrent created and seeding');
+  } catch (e) {
+    if (e.code === 'ERR_MODULE_NOT_FOUND'){
+      console.log('watched a directory for torrents that didnt have a meta.json, skipping!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+    } else {
+      console.error('SKIPPING TORRENT DUE TO FAILURE: ', e)
+    }
+  }
 }
 
 export const startSeeding = async () => {
   console.log('IS IT CONNECTED?????????', await deluge.isConnected());
   await addTorrents(torrentRoot);
-  console.log('torrents are ', client.torrents);
   // TODO: BROKEN WATCHER
   // await startWatcher();
 };
 
+
+startWatcher();
+
 async function startWatcher () {
   // watch for any added
-  const watcher = chokidar.watch(torrentRoot, { ignored: /^\./, persistent: true });
+  const watcher = chokidar.watch(torrentRoot, { ignored: /^\./, persistent: true, depth: 1 });
 
-  async function onDirectoryAdded (path: string) {
-    await processDirToTorrent(path);
+  async function onDirectoryAdded (newPath: string) {
+    console.log('directory added from watch', newPath)
+    const allTorrents = await db.getAllVideos();
+    const existing = allTorrents.find((t) => t.name === path.basename(newPath));
+    if (existing){
+      console.log('watched a torrent that already is in the db, skipping')
+      return;
+    }
+    await processDirToTorrent(newPath);
   }
 
   watcher.on('addDir', async path => {
