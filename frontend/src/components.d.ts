@@ -244,6 +244,7 @@ declare module 'vue' {
     ScrollPanel: typeof import('./../node_modules/primevue/scrollpanel/ScrollPanel.vue')['default']
     ScrollTop: typeof import('./../node_modules/primevue/scrolltop/ScrollTop.vue')['default']
     Search: typeof import('./../node_modules/primevue/icons/search/index.vue')['default']
+    SearchBar: typeof import('./views/torrent-list/SearchBar.vue')['default']
     Searchminus: typeof import('./../node_modules/primevue/icons/searchminus/index.vue')['default']
     Searchplus: typeof import('./../node_modules/primevue/icons/searchplus/index.vue')['default']
     SelectButton: typeof import('./../node_modules/primevue/selectbutton/SelectButton.vue')['default']

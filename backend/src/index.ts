@@ -30,7 +30,10 @@ startSeeding().then(() => {
         next();
     })
     app.get('/list', async (req,res) => {
-        const videos = await db.getAllVideos();
+
+        const {tag, search} = req.query;
+
+        const videos = await db.getAllTorrents(tag, search);
         return res.status(200).send(videos);
     })
 
@@ -48,7 +51,7 @@ startSeeding().then(() => {
 
     app.get('/torrent-feed', async (req, res) => {
         try {
-            const videos = await db.getAllVideos();
+            const videos = await db.getAllTorrents();
 
             const feed = new Feed({
                 title: 'UFO Torrent Feed',

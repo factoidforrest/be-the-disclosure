@@ -16,11 +16,17 @@ export type Torrent = {
     source: string;
     description: string;
     livePreview: boolean;
+    tags: {name:string, id: string}[];
 };
 
 export const api = {
-    list: async (): Promise<Torrent[]> => {
-        const res = await ax.get<Torrent[]>('/list')
+    list: async (search:string,tag:string): Promise<Torrent[]> => {
+        const res = await ax.get<Torrent[]>('/list', {
+            params: {
+                search,
+                tag
+            }
+        });
         res.data.forEach((t) => t.livePreview = false);
         return res.data
     }

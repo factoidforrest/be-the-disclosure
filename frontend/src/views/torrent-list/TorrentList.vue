@@ -1,9 +1,6 @@
 <template>
+  <SearchBar/>
   <Accordion :multiple="true" class="mx-0 md:mx-8 mt-6 torrent-list">
-    <span v-for="torrent in torrents" >ass2 {{ torrent.id }}</span>
-    <span>test</span>
-    <p>text-justify</p>
-
     <AccordionTab  v-for="torrent in torrents" :key="torrent.id" class="">
       <template #header>
             <div class="flex gap-2 w-full  flex-column md:flex-row md:align-items-end">
@@ -25,7 +22,7 @@
 
           <!-- <Button class="m-1" link icon="pi pi-users" badge="8" badgeClass="p-badge-danger">Preview Content</Button> -->
           <!-- <a>Preview Content <span class="font-light">(experimental)</span></a> -->
-          <span class="m-1">Tag groups: <span class="font-light">(coming soon)</span></span>
+          <span class="m-1">Tag groups: <Tag class="ml-1 mb-1" v-for="tag in torrent.tags">{{tag.name}}</Tag></span>
           <a :href="torrent.magnetLink">
             <Button class="p-2 m-1" severity="danger" label="Magnet Link" icon="pi pi-download" size="small" outlined/>
 
@@ -85,88 +82,61 @@
       </v-list>
     </v-container> -->
   </template>
-  
-<script lang="ts">
-  // @ts-ignore
+  <script lang="ts" setup>
+  import { ref, onMounted, watch } from 'vue';
   import WebTorrentHybrid from 'webtorrent';
-  import {type WebTorrent as WebTorrentType} from '../../types/webtorrent';
-  import { defineComponent } from 'vue';
-  import { BiMagnetFill } from "oh-vue-icons/icons"
-  import {api, Torrent} from '../../api'
-  // import LivePreview from './LivePreview.vue';
+  import { type WebTorrent as WebTorrentType } from '../../types/webtorrent';
+  import { api, Torrent } from '../../api';
+  import SearchBar from './SearchBar.vue';
+
+  export interface Props {
+    tag: string;
+    search: string;
+  }
+
+  const props = defineProps<Props>();
 
   const TypedWebTorrent = WebTorrentHybrid as WebTorrentType;
+  const torrents = ref<Torrent[]>([]);
+  const client = new TypedWebTorrent({});
 
-  export default defineComponent({
-      name: 'TorrentList',
-      data() {
-      return {
-        torrents: [] as Torrent[],
-        client: new TypedWebTorrent({}),
-      };
-    },
-    components: {
-      BiMagnetFill,
-      // LivePreview
-    },
-    methods: {
-      formatDate(dateString: string) {
-        const date = new Date(dateString);
-        return date.toLocaleDateString(undefined, {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric',
-        });
-      },
-      openMagnet(link: string) {
-        // @ts-ignore
-        window.location.href = link;
-      },
-      toggleLivePreview(torrent: Torrent){
-        console.log(torrent);
-        // @ts-ignore THIS IS AUTOMATIC UNWRAPPED WTH
-        torrent.livePreview = !torrent.livePreview;
-        console.log('livepreivew is ', torrent.livePreview)
-      }
-    },
-    async mounted() {
+  console.log('tag is', props.tag);
 
-        try {
-        this.torrents = await api.list();
-        
-        } catch (error) {
-        console.error('There was an error fetching the torrents:', error);
-        }
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+  };
 
-        // var torrentId = 'magnet:?xt=urn:btih:08ada5a7a6183aae1e09d831df6748d566095a10&dn=Sintel&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.fastcast.nz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2F&xs=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel.torrent'
+  const openMagnet = (link: string) => {
+    window.location.href = link;
+  };
 
-        
-        
+  const toggleLivePreview = (torrent: Torrent) => {
+    console.log(torrent);
+    torrent.livePreview = !torrent.livePreview;
+    console.log('livepreview is ', torrent.livePreview);
+  };
 
-        
-        // this.client.on('error', err => {
-        //   console.log('[+] Webtorrent error: ' + err);
-        // });
+  const fetchTorrents = async () => {
+    try {
+      torrents.value = await api.list(props.search, props.tag);
+    } catch (error) {
+      console.error('There was an error fetching the torrents:', error);
+    }
+  };
 
+  onMounted(fetchTorrents);
 
-
-        // this.client.add(torrentId, (torrent) => {
-        //   // const interval = setInterval(() => {
-        //   //   // console.log('[+] Progress: ' + (torrent.progress * 100).toFixed(1) + '%')
-        //   //   this.setState({torrentProgress: (torrent.progress * 100).toFixed(1) + '%'});
-        //   // }, 500);
-        //   // torrent.on('done', () => {
-        //   //   console.log('Progress: 100%');
-        //   //   clearInterval(interval);
-        //   // })
-
-        //   torrent.files.forEach((file) => {
-        //     file.appendTo('body');
-        //   })
-
-        //   });
-  }
-  });
+  watch(
+    () => [props.search, props.tag],
+    () => {
+      fetchTorrents();
+    }
+  );
   </script>
   
   <style>

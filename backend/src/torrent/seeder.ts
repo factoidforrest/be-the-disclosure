@@ -3,7 +3,7 @@ import WebTorrent from 'webtorrent-hybrid';
 import { type WebTorrent as WebTorrentType } from '@types/webtorrent';
 import fs from 'fs/promises';
 import crypto from 'crypto';
-import { db, type TorrentRecord } from '../db/db';
+import { db } from '../db/db';
 import chokidar from 'chokidar';
 import Deluge from './deluge-client';
 
@@ -40,8 +40,10 @@ async function addTorrents (dir: string) {
 async function processDirToTorrent (torrentDir: string) {
   console.log('torrentdir is ', torrentDir);
   try {
-    const torrentMeta = await import(path.join(torrentDir, 'meta.json')) as TorrentMeta;
-
+    const torrentMetaDirty = await import(path.join(torrentDir, 'meta.json')) as TorrentMeta;
+    // @ts-ignore
+    const torrentMeta = torrentMetaDirty.default;
+    console.log('CLEAN TORRENT METADATA IS ', torrentMeta);
     // since webtorrent seems awful or even broken at seeding, also add it to a local deluge client for that initial seed
     // we also need to wrap the torrent name like this so that it will find it since deluge automatically wraps files like this in the torrent name, annoying and clunky
 
@@ -58,14 +60,16 @@ async function processDirToTorrent (torrentDir: string) {
       });
     });
 
-    const torrentForUpsert: TorrentRecord = {
+    const tags = torrentMeta.tags || [];
+    delete torrentMeta.tags;
+    const torrentForUpsert = {
       ...torrentMeta,
       name: torrentName,
       magnetLink
     };
     console.log('created torrent and attempting upsert', torrentForUpsert);
 
-    db.upsertVideo(torrentForUpsert); // AWAITING THIS IS BROKEN, WEIRD AF
+    await db.upsertTorrent(torrentForUpsert, tags); 
     console.log('Torrent created and seeding');
   } catch (e) {
     if (e.code === 'ERR_MODULE_NOT_FOUND'){
@@ -92,7 +96,7 @@ async function startWatcher () {
 
   async function onDirectoryAdded (newPath: string) {
     console.log('directory added from watch', newPath)
-    const allTorrents = await db.getAllVideos();
+    const allTorrents = await db.getAllTorrents();
     const existing = allTorrents.find((t) => t.name === path.basename(newPath));
     if (existing){
       console.log('watched a torrent that already is in the db, skipping')

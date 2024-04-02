@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { RouteLocationNormalized, createRouter, createWebHistory } from 'vue-router';
 import TorrentList from './views/torrent-list/TorrentList.vue';
 import About from './views/about/About.vue';
 import Subscribe from './views/subscribe/Subscribe.vue';
@@ -9,7 +9,11 @@ const routes = [
     {
         path: '/',
         name: 'torrent-list',
-        component: TorrentList
+        component: TorrentList,
+        props: (route: RouteLocationNormalized) => ({
+            search: route.query.search,
+            tag: route.query.tag
+        })
     },
     {
         path: '/about',

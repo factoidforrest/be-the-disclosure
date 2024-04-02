@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/db/prisma"
+  
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../mydb.sqlite"
+}
+
+model Tag {
+    id      String   @id @default(uuid())
+    name    String   @unique
+    torrents Torrent[]
+}
+
+model Torrent {
+    id          String   @id @default(uuid())
+    name        String
+    magnetLink  String   @unique
+    createdAt   DateTime @default(now())
+    source      String
+    description String
+    tags        Tag[]    @relation()
+}
+        
