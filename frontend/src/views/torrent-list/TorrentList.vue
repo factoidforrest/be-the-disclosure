@@ -1,5 +1,6 @@
 <template>
-  <SearchBar/>
+  <SearchBar :loading="isFetching"/>
+
   <Accordion :multiple="true" class="mx-0 md:mx-8 mt-6 torrent-list">
     <AccordionTab  v-for="torrent in torrents" :key="torrent.id" class="">
       <template #header>
@@ -121,13 +122,19 @@
     console.log('livepreview is ', torrent.livePreview);
   };
 
+  const isFetching = ref(false);
+
   const fetchTorrents = async () => {
     try {
+      isFetching.value = true;
       torrents.value = await api.list(props.search, props.tag);
+      isFetching.value = false;
     } catch (error) {
+      isFetching.value = false;
       console.error('There was an error fetching the torrents:', error);
     }
   };
+
 
   onMounted(fetchTorrents);
 

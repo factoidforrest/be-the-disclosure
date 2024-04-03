@@ -1,26 +1,28 @@
 <template>
-  <div class="row justify-content-center align-items-center">
-    <div class="search-bar col-4">
+  <div class="grid md:mx-6 mx-3 mt-5 mb-3">
+    <div
+      class="col-12 md:col-4 md:col-offset-8 "
+    >
       <InputGroup>
         <InputText
           v-model="searchQuery"
-          placeholder="Keyword"
+          placeholder="Keyword or Tag"
           @keyup.enter="submitSearch"
         />
         <Button
-          icon="pi pi-search"
-          severity=""
+          :icon="loading ? 'pi pi-spinner pi-spin' : 'pi pi-search'"
           @click="submitSearch"
         />
       </InputGroup>
     </div>
   </div>
 </template>
+  
 
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 
 export default defineComponent({
@@ -28,8 +30,13 @@ export default defineComponent({
   components: {
 
   },
+  props: {
+    loading: Boolean,
+  },
   setup() {
-    const searchQuery = ref('');
+
+    const route = useRoute();
+    const searchQuery = ref(route.query.search);
 
     const router = useRouter();
 

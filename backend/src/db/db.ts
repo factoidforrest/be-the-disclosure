@@ -32,8 +32,18 @@ class TorrentDatabase {
         ...query.where, 
         OR: [
           { name: { contains: search } },
-          { description: { contains: search } }
-        ]
+          { description: { contains: search } },
+          // also search tags because why not
+          {tags: 
+            {
+              some: {
+                name: { contains: search } 
+              }
+              
+            } 
+          }
+        ],
+        
       }
     }
 
