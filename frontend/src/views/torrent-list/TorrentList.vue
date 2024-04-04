@@ -36,11 +36,11 @@
           <!-- <h4 class="p-0 m-0">{{ torrent.name }}</h4> -->
             <p>{{ torrent.description }}</p>
         </div>
-        <div class="col">
+        <!-- <div class="col">
             <div v-if="torrent.livePreview" class="webtorrent-container">
               <LivePreview :torrent="torrent" :client="client"/>
             </div>
-        </div>
+        </div> -->
     </div>
     </AccordionTab>
 </Accordion>
@@ -85,8 +85,8 @@
   </template>
   <script lang="ts" setup>
   import { ref, onMounted, watch } from 'vue';
-  import WebTorrentHybrid from 'webtorrent';
-  import { type WebTorrent as WebTorrentType } from '../../types/webtorrent';
+  // import WebTorrentHybrid from 'webtorrent';
+  // import { type WebTorrent as WebTorrentType } from '../../types/webtorrent';
   import { api, Torrent } from '../../api';
   import SearchBar from './SearchBar.vue';
 
@@ -97,9 +97,9 @@
 
   const props = defineProps<Props>();
 
-  const TypedWebTorrent = WebTorrentHybrid as WebTorrentType;
+  // const TypedWebTorrent = WebTorrentHybrid as WebTorrentType;
   const torrents = ref<Torrent[]>([]);
-  const client = new TypedWebTorrent({});
+  // const client = new TypedWebTorrent({});
 
   console.log('tag is', props.tag);
 
@@ -112,15 +112,12 @@
     });
   };
 
-  const openMagnet = (link: string) => {
-    window.location.href = link;
-  };
 
-  const toggleLivePreview = (torrent: Torrent) => {
-    console.log(torrent);
-    torrent.livePreview = !torrent.livePreview;
-    console.log('livepreview is ', torrent.livePreview);
-  };
+  // const toggleLivePreview = (torrent: Torrent) => {
+  //   console.log(torrent);
+  //   torrent.livePreview = !torrent.livePreview;
+  //   console.log('livepreview is ', torrent.livePreview);
+  // };
 
   const isFetching = ref(false);
 

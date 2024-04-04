@@ -87,16 +87,16 @@ app.get('/torrent-feed', async (req, res) => {
 });
 
 
-if (process.env.NODE_ENV !== 'development'){
-    app.use(express.static(staticAssetPath));
-    console.log("serving statics from ", staticAssetPath);
+// if (process.env.NODE_ENV !== 'development'){
+//     app.use(express.static(staticAssetPath));
+//     console.log("serving statics from ", staticAssetPath);
 
-    // All other GET requests not handled before will return our Vue app
-    app.get('*', (req, res) => {
-        console.log("Serving homepage off route" , req.path);
-        res.sendFile(path.join(staticAssetPath, 'index.html'));
-    });
-}
+//     // All other GET requests not handled before will return our Vue app
+//     app.get('*', (req, res) => {
+//         console.log("Serving homepage off route" , req.path);
+//         res.sendFile(path.join(staticAssetPath, 'index.html'));
+//     });
+// }
 
 
 app.listen(port, () => {

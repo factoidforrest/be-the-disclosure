@@ -36,7 +36,7 @@ export default defineComponent({
   setup() {
 
     const route = useRoute();
-    const searchQuery = ref(route.query.search);
+    const searchQuery = ref(route.query.search?.toString() || "");
 
     const router = useRouter();
 
