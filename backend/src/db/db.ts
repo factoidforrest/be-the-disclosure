@@ -1,4 +1,4 @@
-import { PrismaClient, type Torrent } from '@prisma/client';
+import { PrismaClient, type Torrent } from './prisma';
 
 
 const prisma = new PrismaClient();

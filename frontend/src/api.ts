@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 //@ts-ignore
-const baseURL = import.meta.env.DEV ? "/api" : ""
+const baseURL = "/api"
 
 
 const ax = axios.create({
