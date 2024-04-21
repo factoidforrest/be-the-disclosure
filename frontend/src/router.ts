@@ -4,6 +4,7 @@ import About from './views/about/About.vue';
 import Subscribe from './views/subscribe/Subscribe.vue';
 import Upload from './views/upload/Upload.vue'; // Import the Upload component
 
+import { authGuard } from "@auth0/auth0-vue";
 
 const routes = [
     {
@@ -28,7 +29,9 @@ const routes = [
     {
         path: '/upload', // Add the route for the Upload component
         name: 'Upload',
-        component: Upload
+        component: Upload,
+        beforeEnter: authGuard,
+
     }
 ];
 

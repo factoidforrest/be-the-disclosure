@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
+import { createAuth0 } from '@auth0/auth0-vue';
 
 import router from './router';
 
@@ -18,12 +19,21 @@ import { FaFlag, RiZhihuFill, IoMagnet} from "oh-vue-icons/icons";
 
 addIcons(FaFlag, RiZhihuFill, IoMagnet);
 
-
+const auth0 = createAuth0({
+    domain: 'dev-qrziy3kg2izg6egj.us.auth0.com',
+    clientId: 'QkvKpXKmFZ1EVm6gYlSaV5tGlbZuBJ3b',
+    authorizationParams: {
+        // @ts-ignore
+      redirect_uri: 'http://localhost:5173'
+    },
+    cacheLocation: 'localstorage',
+  });
 
 
 
 const app = createApp(App);
 
+app.use(auth0);
 app.use(PrimeVue, { ripple: true });
 app.use(router);
 app.component("VIcon", OhVueIcon);

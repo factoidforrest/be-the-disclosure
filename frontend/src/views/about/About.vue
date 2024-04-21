@@ -20,9 +20,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-
 export default defineComponent({
   name: 'About',
+  components: {},
   data() {
     return {
       faqList: [
@@ -43,7 +43,7 @@ export default defineComponent({
         },
         {
           question: 'What are torrents?',
-          answer: `Torrents are a secure way to download and share files. Typically associated with content-piracy, they are difficult to stop and hardended against attack.
+          answer: `Torrents are a way to download and share files without a central server as a host. Each downloader shares the task of distributing the file to the other downloaders. Typically associated with content-piracy, they are difficult to stop and hardended against attack.
           You need a torrent client, like qBittorrent (or Flud on Android), to download and share files. It is easy. 
           `,
         },
