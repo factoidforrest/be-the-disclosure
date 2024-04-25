@@ -7,18 +7,19 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint ./src/**/*",
-    "lint:fix": "eslint ./src/**/* --fix"
+    "lint": "eslint ./src/**/*.vue",
+    "lint:fix": "eslint ./src/**/*.vue --fix"
   },
   "dependencies": {
     "@auth0/auth0-vue": "^2.3.3",
     "@mdi/font": "^7.4.47",
+    "@wdns/vue-code-block": "^2.3.2",
     "axios": "^1.6.3",
     "oh-vue-icons": "^1.0.0-rc3",
     "prettier": "^3.2.5",
     "primeflex": "^3.3.1",
     "primeicons": "^6.0.1",
-    "primevue": "3.48.0",
+    "primevue": "3.51.0",
     "unplugin-vue-components": "^0.26.0",
     "vite-plugin-vuetify": "^2.0.1",
     "vue": "^3.3.11",
