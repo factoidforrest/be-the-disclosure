@@ -3,10 +3,7 @@ module.exports = {
         "browser": true,
         "es2021": true
     },
-    "parser": "@typescript-eslint/parser", // Specifies the ESLint parser
-    "extends": [
-        "plugin:@typescript-eslint/recommended" // Uses the recommended rules from the @typescript-eslint/eslint-plugin
-      ],
+    "extends": ["standard-with-typescript","plugin:prettier/recommended"],
     "overrides": [
         {
             "env": {
@@ -22,11 +19,9 @@ module.exports = {
     ],
     "parserOptions": {
         "ecmaVersion": "latest",
-        "sourceType": "module",
-        "project": "./tsconfig.json" 
+        "sourceType": "module"
     },
     "rules": {
-        "semi": ["error", "always"]
+        "max-len": ["warn", { "code": 120 }]
     }
 }
-

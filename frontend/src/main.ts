@@ -24,9 +24,11 @@ const auth0 = createAuth0({
     clientId: 'QkvKpXKmFZ1EVm6gYlSaV5tGlbZuBJ3b',
     authorizationParams: {
         // @ts-ignore
-      redirect_uri: 'http://localhost:5173'
+      redirect_uri: 'http://localhost:5173',
+      audience: 'https://www.bethedisclosure.com/api'
     },
     cacheLocation: 'localstorage',
+    
   });
 
 

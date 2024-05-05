@@ -127,7 +127,8 @@ exports.Prisma.TorrentScalarFieldEnum = {
   magnetLink: 'magnetLink',
   createdAt: 'createdAt',
   source: 'source',
-  description: 'description'
+  description: 'description',
+  reviewed: 'reviewed'
 };
 
 exports.Prisma.SortOrder = {

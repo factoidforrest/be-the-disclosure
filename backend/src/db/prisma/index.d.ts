@@ -1939,6 +1939,7 @@ export namespace Prisma {
     createdAt: Date | null
     source: string | null
     description: string | null
+    reviewed: string | null
   }
 
   export type TorrentMaxAggregateOutputType = {
@@ -1948,6 +1949,7 @@ export namespace Prisma {
     createdAt: Date | null
     source: string | null
     description: string | null
+    reviewed: string | null
   }
 
   export type TorrentCountAggregateOutputType = {
@@ -1957,6 +1959,7 @@ export namespace Prisma {
     createdAt: number
     source: number
     description: number
+    reviewed: number
     _all: number
   }
 
@@ -1968,6 +1971,7 @@ export namespace Prisma {
     createdAt?: true
     source?: true
     description?: true
+    reviewed?: true
   }
 
   export type TorrentMaxAggregateInputType = {
@@ -1977,6 +1981,7 @@ export namespace Prisma {
     createdAt?: true
     source?: true
     description?: true
+    reviewed?: true
   }
 
   export type TorrentCountAggregateInputType = {
@@ -1986,6 +1991,7 @@ export namespace Prisma {
     createdAt?: true
     source?: true
     description?: true
+    reviewed?: true
     _all?: true
   }
 
@@ -2068,6 +2074,7 @@ export namespace Prisma {
     createdAt: Date
     source: string
     description: string
+    reviewed: string
     _count: TorrentCountAggregateOutputType | null
     _min: TorrentMinAggregateOutputType | null
     _max: TorrentMaxAggregateOutputType | null
@@ -2094,6 +2101,7 @@ export namespace Prisma {
     createdAt?: boolean
     source?: boolean
     description?: boolean
+    reviewed?: boolean
     tags?: boolean | Torrent$tagsArgs<ExtArgs>
     _count?: boolean | TorrentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["torrent"]>
@@ -2105,6 +2113,7 @@ export namespace Prisma {
     createdAt?: boolean
     source?: boolean
     description?: boolean
+    reviewed?: boolean
   }
 
   export type TorrentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2125,6 +2134,7 @@ export namespace Prisma {
       createdAt: Date
       source: string
       description: string
+      reviewed: string
     }, ExtArgs["result"]["torrent"]>
     composites: {}
   }
@@ -2526,6 +2536,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"Torrent", 'DateTime'>
     readonly source: FieldRef<"Torrent", 'String'>
     readonly description: FieldRef<"Torrent", 'String'>
+    readonly reviewed: FieldRef<"Torrent", 'String'>
   }
     
 
@@ -2898,7 +2909,8 @@ export namespace Prisma {
     magnetLink: 'magnetLink',
     createdAt: 'createdAt',
     source: 'source',
-    description: 'description'
+    description: 'description',
+    reviewed: 'reviewed'
   };
 
   export type TorrentScalarFieldEnum = (typeof TorrentScalarFieldEnum)[keyof typeof TorrentScalarFieldEnum]
@@ -2991,6 +3003,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Torrent"> | Date | string
     source?: StringFilter<"Torrent"> | string
     description?: StringFilter<"Torrent"> | string
+    reviewed?: StringFilter<"Torrent"> | string
     tags?: TagListRelationFilter
   }
 
@@ -3001,6 +3014,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     source?: SortOrder
     description?: SortOrder
+    reviewed?: SortOrder
     tags?: TagOrderByRelationAggregateInput
   }
 
@@ -3014,6 +3028,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Torrent"> | Date | string
     source?: StringFilter<"Torrent"> | string
     description?: StringFilter<"Torrent"> | string
+    reviewed?: StringFilter<"Torrent"> | string
     tags?: TagListRelationFilter
   }, "id" | "magnetLink">
 
@@ -3024,6 +3039,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     source?: SortOrder
     description?: SortOrder
+    reviewed?: SortOrder
     _count?: TorrentCountOrderByAggregateInput
     _max?: TorrentMaxOrderByAggregateInput
     _min?: TorrentMinOrderByAggregateInput
@@ -3039,6 +3055,7 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Torrent"> | Date | string
     source?: StringWithAggregatesFilter<"Torrent"> | string
     description?: StringWithAggregatesFilter<"Torrent"> | string
+    reviewed?: StringWithAggregatesFilter<"Torrent"> | string
   }
 
   export type TagCreateInput = {
@@ -3087,6 +3104,7 @@ export namespace Prisma {
     createdAt?: Date | string
     source: string
     description: string
+    reviewed?: string
     tags?: TagCreateNestedManyWithoutTorrentsInput
   }
 
@@ -3097,6 +3115,7 @@ export namespace Prisma {
     createdAt?: Date | string
     source: string
     description: string
+    reviewed?: string
     tags?: TagUncheckedCreateNestedManyWithoutTorrentsInput
   }
 
@@ -3107,6 +3126,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    reviewed?: StringFieldUpdateOperationsInput | string
     tags?: TagUpdateManyWithoutTorrentsNestedInput
   }
 
@@ -3117,6 +3137,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    reviewed?: StringFieldUpdateOperationsInput | string
     tags?: TagUncheckedUpdateManyWithoutTorrentsNestedInput
   }
 
@@ -3127,6 +3148,7 @@ export namespace Prisma {
     createdAt?: Date | string
     source: string
     description: string
+    reviewed?: string
   }
 
   export type TorrentUpdateManyMutationInput = {
@@ -3136,6 +3158,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    reviewed?: StringFieldUpdateOperationsInput | string
   }
 
   export type TorrentUncheckedUpdateManyInput = {
@@ -3145,6 +3168,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    reviewed?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -3231,6 +3255,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     source?: SortOrder
     description?: SortOrder
+    reviewed?: SortOrder
   }
 
   export type TorrentMaxOrderByAggregateInput = {
@@ -3240,6 +3265,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     source?: SortOrder
     description?: SortOrder
+    reviewed?: SortOrder
   }
 
   export type TorrentMinOrderByAggregateInput = {
@@ -3249,6 +3275,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     source?: SortOrder
     description?: SortOrder
+    reviewed?: SortOrder
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -3423,6 +3450,7 @@ export namespace Prisma {
     createdAt?: Date | string
     source: string
     description: string
+    reviewed?: string
   }
 
   export type TorrentUncheckedCreateWithoutTagsInput = {
@@ -3432,6 +3460,7 @@ export namespace Prisma {
     createdAt?: Date | string
     source: string
     description: string
+    reviewed?: string
   }
 
   export type TorrentCreateOrConnectWithoutTagsInput = {
@@ -3465,6 +3494,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Torrent"> | Date | string
     source?: StringFilter<"Torrent"> | string
     description?: StringFilter<"Torrent"> | string
+    reviewed?: StringFilter<"Torrent"> | string
   }
 
   export type TagCreateWithoutTorrentsInput = {
@@ -3513,6 +3543,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    reviewed?: StringFieldUpdateOperationsInput | string
   }
 
   export type TorrentUncheckedUpdateWithoutTagsInput = {
@@ -3522,6 +3553,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    reviewed?: StringFieldUpdateOperationsInput | string
   }
 
   export type TorrentUncheckedUpdateManyWithoutTagsInput = {
@@ -3531,6 +3563,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     source?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    reviewed?: StringFieldUpdateOperationsInput | string
   }
 
   export type TagUpdateWithoutTorrentsInput = {

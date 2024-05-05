@@ -7,27 +7,52 @@
 generator client {
   provider = "prisma-client-js"
   output   = "../src/db/prisma"
-  
 }
 
 datasource db {
   provider = "sqlite"
-  url      = "file:../mydb.sqlite"
+  url      = "file:./dev.db"
 }
 
 model Tag {
-    id      String   @id @default(uuid())
-    name    String   @unique
-    torrents Torrent[]
+  id       String    @id @default(uuid())
+  name     String    @unique
+  torrents Torrent[]
+}
+
+//user {
+//   sub: 'google-oauth2|118286324596047721516',
+//   given_name: 'Forrest',
+//   family_name: 'Allison',
+//   nickname: 'light24bulbs',
+//   name: 'Forrest Allison',
+//   picture: 'https://lh3.googleusercontent.com/a/ACg8ocJ02-G0FuIgo0WlidGl6zDxAwDc86hMHdpRWZCvbK00MI4zCdkw=s96-c',
+//   locale: 'en',
+//   updated_at: '2024-05-05T17:38:00.656Z',
+//   email: 'light24bulbs@gmail.com',
+//   email_verified: true
+// }
+
+model User {
+  id          String    @id @default(uuid())
+  createdAt   DateTime  @default(now())
+  email       String?
+  sub         String    @unique
+  given_name  String?
+  family_name String?
+  nickname    String?
+  Torrent     Torrent[]
 }
 
 model Torrent {
-    id          String   @id @default(uuid())
-    name        String
-    magnetLink  String   @unique
-    createdAt   DateTime @default(now())
-    source      String
-    description String
-    tags        Tag[]    @relation()
+  id          String   @id @default(uuid())
+  name        String
+  magnetLink  String   @unique
+  createdAt   DateTime @default(now())
+  source      String
+  description String
+  reviewed    String   @default("pending")
+  tags        Tag[]    @relation()
+  creator     User     @relation(references: [id], fields: [userId])
+  userId      String
 }
-        

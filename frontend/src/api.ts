@@ -43,18 +43,16 @@ export const api = {
         res.data.forEach((t) => t.livePreview = false);
         return res.data
     },
-    upload: async (magnetLink:string, token?:string): Promise<UploadRes> => {
-        const body: AxiosRequestConfig<any> = {
-            params: {
-                magnetLink
-            },
+    upload: async (magnetLink:string, token:string): Promise<UploadRes> => {
+        const body = {
+            magnetLink
         }
-        if (token){
-            body.headers = {
-                "Authorization":`Bearer ${token}`
-            }
+
+        const headers = {
+            "Authorization":`Bearer ${token}`
         }
-        const res = await ax.post<UploadRes>('/upload', body);
+        
+        const res = await ax.post<UploadRes>('/upload', body, {headers});
         // res.data.forEach((t) => t.livePreview = false);
         // return res.data
         // TODO: THIS IS MOCHED

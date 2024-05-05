@@ -12,7 +12,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:../mydb.sqlite"
+  url      = "file:./dev.db"
 }
 
 model Tag {
@@ -21,13 +21,18 @@ model Tag {
     torrents Torrent[]
 }
 
+
+
+
 model Torrent {
-    id          String   @id @default(uuid())
-    name        String
-    magnetLink  String   @unique
-    createdAt   DateTime @default(now())
-    source      String
-    description String
-    tags        Tag[]    @relation()
+  id          String       @id @default(uuid())
+  name        String
+  magnetLink  String       @unique
+  createdAt   DateTime     @default(now())
+  source      String
+  description String
+  reviewed    String @default("pending")
+  tags        Tag[]        @relation()
 }
+
         

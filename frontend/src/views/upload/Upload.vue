@@ -127,10 +127,9 @@
                   required
                   :invalid="magnetLink !== '' && !magnetValid"
                 />
-                <small id="magnet-help"
-                  >Use your torrent client to create a new torrent and copy
+                <small id="magnet-help">{{ magnetValid ? `Use your torrent client to create a new torrent and copy
                   the magnet link it creates here. Remember to seed for at
-                  least a few days.</small
+                  least a few days.`: 'Magnet Link Invalid, check formatting'}}</small
                 >
               </div>
             </form>
@@ -208,16 +207,23 @@ const metadata = computed(() => {
 const magnetRegex = /magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32}/i
 
 const magnetValid = computed(() => {
-  console.log('computing valid regex')
-  console.log(magnetRegex.test(magnetLink.value))
-  return magnetRegex.test(magnetLink.value)
+  return magnetLink.value === '' || magnetRegex.test(magnetLink.value)
 })
 
 const isLoading = ref(false);
 const uploadRes = ref<UploadRes|null> (null);
 async function submitMagnet() {
   isLoading.value = true;
-  const res = await api.upload(magnetLink.value, await auth0.getAccessTokenSilently());
+
+  const token = await auth0.getAccessTokenSilently(
+      {authorizationParams:
+        {audience:'https://www.bethedisclosure.com/api'}
+      }
+    )
+  const res = await api.upload(
+    magnetLink.value, 
+    token
+  );
   uploadRes.value = res;
 }
 
